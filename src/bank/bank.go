@@ -8,26 +8,43 @@ import (
 
 type Bank struct {
 	accountList []*account.Account
+	date        int
 }
 
-func (b *Bank) CreateAccount(Apr float32, CreditLimit float32) {
-	var ID = len(b.accountList)
-	var c = account.NewAccount(ID, Apr, CreditLimit)
+func (b *Bank) CreateAccount(apr float32, creditLimit float32) {
+	var id = len(b.accountList)
+	var c = account.NewAccount(id, apr, creditLimit, b.date)
 	b.accountList = append(b.accountList, c)
 }
 
-func (b *Bank) findAccount(ID int) *account.Account {
-	return b.accountList[ID]
+func (b *Bank) findAccount(id int) *account.Account {
+	return b.accountList[id]
 }
 
-func (b *Bank) ChargeAccount(ID int, c float32) {
-	b.findAccount(ID).Charge(c)
+func (b *Bank) Charge(id int, c float32) {
+	b.findAccount(id).Charge(c, b.date)
 }
 
-func (b *Bank) PaymentAccount(ID int, c float32) {
-	b.findAccount(ID).Pay(c)
+func (b *Bank) MakePayment(id int, c float32) {
+	b.findAccount(id).Payment(c, b.date)
 }
 
-func (b *Bank) PrintAccountInfo(ID int) {
-	fmt.Printf("%+v\n", b.accountList[ID])
+func (b *Bank) PrintAccountInfo(id int) {
+	fmt.Printf("%+v\n", b.findAccount(id))
+}
+
+func (b *Bank) IncrementDate() {
+	b.date = b.date + 1
+	for _, a := range b.accountList {
+		a.ApplyDailyInterest()
+		if (b.date-a.GetdateOpen())%30 == 0 {
+			a.UpdateOutstandingBalance()
+		}
+	}
+}
+
+func (b *Bank) IncrementDateBy(d int) {
+	for i := 0; i < d; i++ {
+		b.IncrementDate()
+	}
 }

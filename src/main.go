@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"./bank"
 )
 
@@ -10,16 +8,22 @@ func main() {
 
 	var b = bank.Bank{}
 	b.CreateAccount(0.35, 1000.00)
+
+	b.Charge(0, 500.0)
 	b.PrintAccountInfo(0)
 
-	b.ChargeAccount(0, 500.0)
-	b.ChargeAccount(0, 500.0)
-	b.ChargeAccount(0, 900.0)
-	b.PaymentAccount(0, 900.0)
+	b.IncrementDateBy(15)
+
+	b.MakePayment(0, 200.0)
 	b.PrintAccountInfo(0)
 
-	b.CreateAccount(0.35, 10000000.00)
-	b.PrintAccountInfo(1)
+	b.IncrementDateBy(10)
 
-	fmt.Println("Hello, Gopher!")
+	b.Charge(0, 100.0)
+	b.PrintAccountInfo(0)
+
+	b.IncrementDateBy(5)
+
+	b.PrintAccountInfo(0)
+
 }
