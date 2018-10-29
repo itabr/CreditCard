@@ -67,6 +67,6 @@ Unit Tests are impelemented for each method of bank and account structs located 
 
 Test scripts for Test Scenario 1 and Test Scenario 2 are imelemeneted with same name. use go run [script name] to run them.
 
-###Notes and Assumptions
+## Notes and Assumptions
 * I assumed that interest is calcualted every day and keep increasing until the end of the month and after applying the interest to the outstanding balance it gets reset.
 * I assumed that bank controles that account and all the charges and payments has to go through the bank and bank controles the date.
