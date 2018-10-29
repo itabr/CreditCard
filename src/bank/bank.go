@@ -86,7 +86,7 @@ func (b *Bank) GetOutstandingBalance(id int) (float32, error) {
 	if err != nil {
 		return 0, err
 	} else {
-		fmt.Printf("OutstandingBalance: \n %.2f", a.GetoutstandingBalance())
+		fmt.Printf("OutstandingBalance: \n%.2f\n", a.GetoutstandingBalance())
 		return a.GetoutstandingBalance(), nil
 	}
 }
@@ -96,7 +96,7 @@ func (b *Bank) Getinterest(id int) (float32, error) {
 	if err != nil {
 		return 0, err
 	}
-	fmt.Printf("Interest: \n %.2f", a.Getinterest())
+	fmt.Printf("Interest: \n%.2f\n", a.Getinterest())
 	return a.Getinterest(), nil
 }
 
