@@ -63,7 +63,7 @@ IncrementDateBy(d int)
 IncrementDateBy increments the Date by specifc number of days
 
 ## Tests
-Unit Tests are impelemented for each method of structs located in the same package as the struct. use go tests to run them.
+Unit Tests are impelemented for each method of bank and account structs located in the same package as the struct. use go tests to run them.
 
 Test scripts for Test Scenario 1 and Test Scenario 2 are imelemeneted with same name. use go run [script name] to run them.
 
