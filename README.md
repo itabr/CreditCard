@@ -29,13 +29,13 @@ The total outstanding balance owed on day 30 should be $411.99.
 
 ## Solution
 
-#### language and enviroment
+### language and enviroment
 This challenge is written in golang(v1.8). all the tests and deployment where done using golang:1.8 docker image. all codes are located in the src folder.
 
-#### Description
+### Description
 The solution includes two structs: bank and account. bank holds list of credit card accounts and the date of the system. using methods define in bank struct, the user can Create an account, Keep track of charges, Keep track of payments and Provide the outstanding balance for any given day. Account struct holds the values associated with credit card and updates them.
 
-#### Usage
+### Usage
 Bellow methods are defined under struct Bank.
 
 CreateAccount(apr float32, creditLimit float32) CreateAccount creates new account with specified apr and creditLimit
@@ -54,7 +54,7 @@ Getinterest(id int) Getinterest print and returns the interest
 
 IncrementDateBy(d int) IncrementDateBy increments the Date by specifc number of days
 
-#### Tests
+### Tests
 Unit Tests are impelemented for each method of bank and account structs located in the same package as the struct. use go tests to run them.
 
 Test scripts for Test Scenario 1 and Test Scenario 2 are implemented with the same name. use go run [script name] to run them.
