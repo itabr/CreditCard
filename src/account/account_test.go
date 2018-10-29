@@ -20,7 +20,7 @@ func TestUpdateBalance(t *testing.T) {
 	var a = Account{
 		apr:         0.35,
 		creditLimit: 1000.00}
-	a.UpdateBalance(500)
+	a.updateBalance(500)
 	if a.outstandingBalance != 500 {
 		t.Error("TestUpdateBalance failed")
 	}

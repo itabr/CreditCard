@@ -1,0 +1,29 @@
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"./bank"
+)
+
+func main() {
+
+	var b = bank.Bank{}
+
+	a, err := b.CreateAccount(0.35, 1000.00)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		os.Exit(1)
+	}
+
+	if err := b.Charge(a.Getid(), 500.0); err != nil {
+		fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		os.Exit(1)
+	}
+
+	b.IncrementDateBy(30)
+
+	b.GetOutstandingBalance(a.Getid())
+
+}

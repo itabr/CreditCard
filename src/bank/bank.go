@@ -6,11 +6,13 @@ import (
 	"../account"
 )
 
+// Bank represets list of creditcards and mangages date
 type Bank struct {
 	accountList []*account.Account
 	date        int
 }
 
+// CreateAccount creates new account
 func (b *Bank) CreateAccount(apr float32, creditLimit float32) (*account.Account, error) {
 	if apr <= 1 && apr >= 0 {
 		var id = len(b.accountList)
@@ -31,6 +33,7 @@ func (b *Bank) findAccount(id int) (*account.Account, error) {
 	return nil, fmt.Errorf("account not found")
 }
 
+// Charge apply a Charge with value c to account with id
 func (b *Bank) Charge(id int, c float32) error {
 	a, err := b.findAccount(id)
 	if err != nil {
@@ -45,6 +48,7 @@ func (b *Bank) Charge(id int, c float32) error {
 	}
 }
 
+// GetListOfCharges prints and returns the list of Charges([]*transaction.Transaction)
 func (b *Bank) GetListOfCharges(id int) error {
 	a, err := b.findAccount(id)
 	if err != nil {
@@ -58,6 +62,7 @@ func (b *Bank) GetListOfCharges(id int) error {
 	}
 }
 
+// MakePayment apply a Payment with value c to an account with id
 func (b *Bank) MakePayment(id int, c float32) error {
 	a, err := b.findAccount(id)
 	if err != nil {
@@ -68,6 +73,7 @@ func (b *Bank) MakePayment(id int, c float32) error {
 	}
 }
 
+// GetListOfPayments prints and returns the list of Payments([]*transaction.Transaction)
 func (b *Bank) GetListOfPayments(id int) error {
 	a, err := b.findAccount(id)
 	if err != nil {
@@ -81,6 +87,7 @@ func (b *Bank) GetListOfPayments(id int) error {
 	}
 }
 
+// GetOutstandingBalance print and returns the GetoutstandingBalance
 func (b *Bank) GetOutstandingBalance(id int) (float32, error) {
 	a, err := b.findAccount(id)
 	if err != nil {
@@ -91,6 +98,7 @@ func (b *Bank) GetOutstandingBalance(id int) (float32, error) {
 	}
 }
 
+// Getinterest print and returns the interest
 func (b *Bank) Getinterest(id int) (float32, error) {
 	a, err := b.findAccount(id)
 	if err != nil {
@@ -100,16 +108,7 @@ func (b *Bank) Getinterest(id int) (float32, error) {
 	return a.Getinterest(), nil
 }
 
-func (b *Bank) PrintAccountInfo(id int) error {
-	a, err := b.findAccount(id)
-	if err != nil {
-		return err
-	} else {
-		fmt.Printf("%+v\n", a)
-		return nil
-	}
-}
-
+// IncrementDate increments the Date by one
 func (b *Bank) IncrementDate() {
 	b.date = b.date + 1
 	for _, a := range b.accountList {
@@ -120,6 +119,7 @@ func (b *Bank) IncrementDate() {
 	}
 }
 
+// IncrementDateBy increments the Date by d
 func (b *Bank) IncrementDateBy(d int) {
 	for i := 0; i < d; i++ {
 		b.IncrementDate()
