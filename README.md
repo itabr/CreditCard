@@ -1,4 +1,4 @@
-# CreditCard
+# Avant- Take Home Challenge
 
 ## Requirements
 Given a credit card that functions as follows:
