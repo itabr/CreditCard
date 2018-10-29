@@ -11,26 +11,102 @@ type Bank struct {
 	date        int
 }
 
-func (b *Bank) CreateAccount(apr float32, creditLimit float32) {
-	var id = len(b.accountList)
-	var c = account.NewAccount(id, apr, creditLimit, b.date)
-	b.accountList = append(b.accountList, c)
+func (b *Bank) CreateAccount(apr float32, creditLimit float32) error {
+	if apr <= 1 && apr >= 0 {
+		var id = len(b.accountList)
+		var c = account.NewAccount(id, apr, creditLimit, b.date)
+		b.accountList = append(b.accountList, c)
+	} else {
+		return fmt.Errorf("APR (%g) requires to be between [0,1] ", apr)
+	}
+	return nil
 }
 
-func (b *Bank) findAccount(id int) *account.Account {
-	return b.accountList[id]
+func (b *Bank) findAccount(id int) (*account.Account, error) {
+	for _, a := range b.accountList {
+		if a.Getid() == id {
+			return b.accountList[id], nil
+		}
+	}
+	return nil, fmt.Errorf("account not found")
 }
 
-func (b *Bank) Charge(id int, c float32) {
-	b.findAccount(id).Charge(c, b.date)
+func (b *Bank) Charge(id int, c float32) error {
+	a, err := b.findAccount(id)
+	if err != nil {
+		return err
+	} else {
+		if a.GetcreditLimit() > a.Getbalance()+c {
+			a.Charge(c, b.date)
+			return nil
+		} else {
+			return fmt.Errorf("over credit limit")
+		}
+	}
 }
 
-func (b *Bank) MakePayment(id int, c float32) {
-	b.findAccount(id).Payment(c, b.date)
+func (b *Bank) GetListOfCharges(id int) error {
+	a, err := b.findAccount(id)
+	if err != nil {
+		return err
+	} else {
+		fmt.Printf("List of Charges: \n")
+		for _, t := range a.GetcardSwipes() {
+			fmt.Printf("Amount: %.2f		Date: %d\n", t.GetAmount(), t.GetDate())
+		}
+		return nil
+	}
 }
 
-func (b *Bank) PrintAccountInfo(id int) {
-	fmt.Printf("%+v\n", b.findAccount(id))
+func (b *Bank) MakePayment(id int, c float32) error {
+	a, err := b.findAccount(id)
+	if err != nil {
+		return err
+	} else {
+		a.Payment(c, b.date)
+		return nil
+	}
+}
+
+func (b *Bank) GetListOfPayments(id int) error {
+	a, err := b.findAccount(id)
+	if err != nil {
+		return err
+	} else {
+		fmt.Printf("List of Payments: \n")
+		for _, t := range a.Getpayments() {
+			fmt.Printf("Amount: %.2f		Date: %d\n", t.GetAmount(), t.GetDate())
+		}
+		return nil
+	}
+}
+
+func (b *Bank) GetOutstandingBalance(id int) error {
+	a, err := b.findAccount(id)
+	if err != nil {
+		return err
+	} else {
+		fmt.Printf("OutstandingBalance: \n %.2f", a.GetoutstandingBalance())
+		return nil
+	}
+}
+
+func (b *Bank) Getinterest(id int) (float32, error) {
+	a, err := b.findAccount(id)
+	if err != nil {
+		return 0, err
+	}
+	return a.Getinterest(), nil
+}
+
+func (b *Bank) PrintAccountInfo(id int) error {
+	a, err := b.findAccount(id)
+	if err != nil {
+		return err
+	} else {
+		fmt.Printf("%+v\n", a)
+		return nil
+	}
 }
 
 func (b *Bank) IncrementDate() {

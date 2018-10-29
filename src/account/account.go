@@ -24,6 +24,10 @@ func (a *Account) GetoutstandingBalance() float32 {
 	return a.outstandingBalance
 }
 
+func (a *Account) Getbalance() float32 {
+	return a.balance
+}
+
 func (a *Account) Getinterest() float32 {
 	return a.interest
 }
@@ -57,21 +61,19 @@ func NewAccount(id int, apr float32, creditLimit float32, dateOpen int) *Account
 	return &a
 }
 
-func (a *Account) Charge(c float32, d int) {
+func (a *Account) UpdateBalance(c float32) {
+	a.balance = a.balance + c
+	a.outstandingBalance = a.outstandingBalance + c
+}
 
+func (a *Account) Charge(c float32, d int) {
 	a.cardSwipes = append(a.cardSwipes, transaction.NewTransaction(c, d))
 	a.UpdateBalance(c)
 }
 
 func (a *Account) Payment(c float32, d int) {
-
 	a.payments = append(a.payments, transaction.NewTransaction(c, d))
 	a.UpdateBalance(-1 * c)
-}
-
-func (a *Account) UpdateBalance(c float32) {
-	a.balance = a.balance + c
-	a.outstandingBalance = a.outstandingBalance + c
 }
 
 func (a *Account) ApplyDailyInterest() {
