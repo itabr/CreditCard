@@ -30,7 +30,7 @@ The total outstanding balance owed on day 30 should be $411.99.
 ## Solution
 
 #### language and enviroment
-This challenge is written in golang(v1.8). all the tests and deployment where done using golang:1.8 docker image.
+This challenge is written in golang(v1.8). all the tests and deployment where done using golang:1.8 docker image. all codes are located in the src folder.
 
 #### Description
 The solution includes two structs: bank and account. bank holds list of credit card accounts and the date of the system. using methods define in bank struct, user can Create an account, Keep track of charges, Keep track of payments and Provide the outstanding balance for any given day. Account struct holds the values associated with credit card and update them. 
