@@ -1,5 +1,3 @@
-# Avant- Take Home Challenge
-
 ## Requirements
 Given a credit card that functions as follows:
 Each card has an APR and Credit Limit.
